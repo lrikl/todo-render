@@ -298,7 +298,7 @@ async function updateTaskInDB(taskId, updates) {
     }
 }
 
-// автоматичне оновлення списку
+// Функція для автоматичного оновлення списку
 async function updateTasks() {
     try {
         const freshTasks = await fetchTasks();
@@ -317,4 +317,27 @@ async function updateTasks() {
     }
 }
 
-setInterval(updateTasks, 5000);
+let intervalUpdate;
+
+function startUpdateInterval() {
+    intervalUpdate = setInterval(updateTasks, 5000);
+}
+
+function stopUpdateInterval() {
+    clearInterval(intervalUpdate);
+}
+
+startUpdateInterval();
+
+// Обробник подій на todoList для відстеження редагування
+todoList.addEventListener('focusin', ({ target }) => {
+    if (target.classList.contains('todo-input')) {
+        stopUpdateInterval(); 
+    }
+});
+
+todoList.addEventListener('focusout', ({ target }) => {
+    if (target.classList.contains('todo-input')) {
+        startUpdateInterval(); 
+    }
+});
