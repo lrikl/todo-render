@@ -9,6 +9,7 @@ const todoList = document.querySelector('.todo-list');
 const todoInput = document.getElementById('todo-main-input'); 
 const todoBlock = document.querySelector('.todo-block'); 
 const deleteButtonAll = document.getElementById('del-allbtn');
+const updateBtn = document.getElementById('update-btn');
 
 let todoTasksArr = []; // Масив для зберігання задач (дані завантажуються з бази даних)
 
@@ -134,7 +135,7 @@ function addTodoToDOM(task) {
 
     const deleteButton = document.createElement('button'); 
     deleteButton.classList.add('delete-item'); 
-    deleteButton.textContent = 'X'; //
+    deleteButton.textContent = 'X'; 
 
     todoItem.appendChild(taskMainText)
     todoItem.appendChild(taskControls);
@@ -297,3 +298,23 @@ async function updateTaskInDB(taskId, updates) {
     }
 }
 
+// автоматичне оновлення списку
+async function updateTasks() {
+    try {
+        const freshTasks = await fetchTasks();
+
+        todoList.innerHTML = '';
+        todoTasksArr = [];
+
+        freshTasks.forEach(task => {
+            addTodoToDOM(task);
+            todoTasksArr.push(task);
+        });
+
+        updateDeleteButtonAll();
+    } catch (error) {
+        console.error('Помилка при оновленні задач:', error);
+    }
+}
+
+setInterval(updateTasks, 5000);
