@@ -25,7 +25,7 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 50px;
+    padding: clamp(12px, 4vw, 48px);
     background: linear-gradient(45deg, #fff1eb, #ace0f9);
     min-height: 100vh;
     color: var(--primary-text-color);
@@ -206,4 +206,27 @@ body {
 
 .todo-p {
     font-size: var(--font-size-large);
+}
+
+@media(max-width: 767px) {
+    #user-name {
+        width: 50%;
+    }
+
+    .todo-item {
+        flex-direction: column;
+    }
+
+    .todo-main-text {
+        width: 100%;
+        overflow: auto;
+    }
+
+    .todo-controls {
+        margin-left: auto;
+    }
+
+    .todo-name:after {
+        width: 100%;
+    }
 }
