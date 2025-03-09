@@ -1,0 +1,209 @@
+:root {
+    --primary-text-color: #333;
+    --light-background: rgba(255, 255, 255, 0.4);
+    --border-color: #ddd;
+    --dark-button-background: rgba(0, 0, 0, 0.6);
+    --dark-button-hover: rgba(0, 0, 0, 0.8);
+    --dark-button-active: rgba(0, 0, 0, 1);
+    --check-bg-color: rgba(184, 227, 247, 0.1);
+    --check-border-color: #b8e3f7;
+    --white: #fff;
+
+    --border-radius: 4px;
+    --padding-small: 8px;
+    --padding-medium: 10px;
+    --padding-large: clamp(10px, 2vw, 20px);
+    --font-size-small: clamp(10px, 1vw, 14px);;
+    --font-size-medium: clamp(12px, 1.3vw, 16px);
+    --font-size-large: clamp(16px, 1.5vw, 20px);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 50px;
+    background: linear-gradient(45deg, #fff1eb, #ace0f9);
+    min-height: 100vh;
+    color: var(--primary-text-color);
+}
+
+.todo-wrap {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.todo-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name-block,
+.todo-block {
+    padding: var(--padding-large);
+    background: var(--light-background);
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+}
+
+.user-name-block {
+    margin-bottom: 24px;
+}
+
+.user-label {
+    font-weight: bold;
+}
+
+.todo-input-wrap {
+    display: flex;
+    gap: 10px;
+    margin-bottom: var(--padding-large);
+}
+
+#user-name {
+    font-weight: bold;
+    font-size: var(--font-size-large);
+    padding: var(--padding-small);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    text-align: center;
+    background-color: var(--light-background);
+}
+
+.todo-main-text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 8px;
+}
+
+.todo-input {
+    flex: 1;
+    padding: var(--padding-medium);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-medium);
+    background-color: var(--light-background);
+}
+
+.add-btn,
+.save-item,
+#save-user-name {
+    padding: var(--padding-medium) var(--padding-large);
+    background-color: var(--dark-button-background);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: var(--font-size-medium);
+}
+
+#save-user-name {
+    padding: var(--padding-small);
+    font-size: var(--font-size-small);
+}
+
+.add-btn:hover,
+.save-item:hover {
+    background-color: var(--dark-button-hover);
+}
+
+.todo-list {
+    list-style: none;
+    padding: 0;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: var(--padding-medium);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--padding-medium);
+    background-color: var(--light-background);
+}
+
+.delete-item,
+.delete-all {
+    background-color: var(--dark-button-hover);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: var(--font-size-small);
+}
+
+.delete-item:hover,
+.delete-all:hover {
+    background-color: var(--dark-button-active);
+}
+
+.delete-all {
+    align-self: flex-end;
+}
+
+.done-item {
+    cursor: pointer;
+}
+
+.check-bg {
+    background-color: var(--check-bg-color);
+    border-color: var(--check-border-color);
+}
+
+.edit-item {
+    background: none;
+    border: none;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+}
+
+.edit-item::before {
+    content: "";
+    background: url("./icon/icon1.svg") no-repeat center/contain;
+    display: block;
+    width: inherit;
+    height: inherit;
+}
+
+.edit-item:hover {
+    transform: scale(1.1);
+}
+
+.save-item {
+    padding: var(--padding-small);
+    font-size: 12px;
+}
+
+.todo-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.todo-name {
+    font-weight: bold;
+    font-size: var(--font-size-small);
+}
+
+.todo-name::after {
+    content: "";
+    display: block;
+    height: 1px;
+    width: 96px;
+    margin: 4px 0;
+    background-color: var(--border-color);
+}
+
+.todo-p {
+    font-size: var(--font-size-large);
+}
