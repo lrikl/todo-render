@@ -1,10 +1,10 @@
 'use strict';
 
-import "./style.css";
+import './style.css';
 
 const userNameInput = document.getElementById('user-name');
 const userSaveBtn = document.getElementById('save-user-name');
-userSaveBtn.style.display = "none";
+userSaveBtn.style.display = 'none';
 const todoList = document.querySelector('.todo-list');
 const todoInput = document.getElementById('todo-main-input'); 
 const todoBlock = document.querySelector('.todo-block'); 
@@ -14,7 +14,7 @@ const updateBtn = document.getElementById('update-btn');
 let todoTasksArr = []; // Масив для зберігання задач (дані завантажуються з бази даних)
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Отримуємо ім'я користувача
+    // отримуємо ім'я користувача
     let userName = localStorage.getItem('userName');
 
     if (!userName) {
@@ -27,12 +27,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     userNameInput.value = userName || '';
     
     userNameInput.addEventListener('focus', () => {
-        userSaveBtn.style.display = "";
+        userSaveBtn.style.display = '';
     });
     
     userNameInput.addEventListener('blur', () => {
         setTimeout(() => {
-            userSaveBtn.style.display = "none";
+            userSaveBtn.style.display = 'none';
         }, 1000);
     });
     
@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    todoTasksArr = await fetchTasks(); // Асинхронно отримуємо задачі з бази даних
-    todoTasksArr.forEach(task => addTodoToDOM(task)); // Для кожної задачі додаємо її в DOM
+    todoTasksArr = await fetchTasks(); // отримуємо задачі з бази даних
+    todoTasksArr.forEach(task => addTodoToDOM(task));
 
     updateDeleteButtonAll();
 });
@@ -66,7 +66,7 @@ todoBlock.addEventListener('click', ({ target }) => {
     }
 });
 
-// додавання по ентеру
+// додавання по Enter
 todoInput.addEventListener('keydown', ({ key }) => {
     if (key === 'Enter') {
         document.getElementById('add-todo').click();
@@ -86,14 +86,14 @@ async function addTodo() {
         return; 
     }
 
-    const userName = localStorage.getItem('userName') || 'Анонім'; // Отримуємо ім'я користувача з localStorage або використовуємо 'Анонім' за замовчуванням
+    const userName = localStorage.getItem('userName') || 'Анонім';
 
-    const newTask = { name: userName, text, completed: false }; // Створюємо об'єкт нової задачі
+    const newTask = { name: userName, text, completed: false }; // створення об'єкта нової задачі
 
-    const taskFromDB = await addTaskToDB(newTask.name, newTask.text, newTask.completed); // Асинхронно додаємо задачу в базу даних
-    if (taskFromDB && taskFromDB._id) { // Якщо задачу успішно додано в базу даних та отримано її _id
-        todoTasksArr.push(taskFromDB); // Додаємо задачу в масив задач
-        addTodoToDOM(taskFromDB); // Додаємо задачу в DOM
+    const taskFromDB = await addTaskToDB(newTask.name, newTask.text, newTask.completed); // додаємо задачу в базу даних
+    if (taskFromDB && taskFromDB._id) { 
+        todoTasksArr.push(taskFromDB); 
+        addTodoToDOM(taskFromDB);
         todoInput.value = ''; 
     }
 
@@ -151,30 +151,30 @@ function addTodoToDOM(task) {
 }
 
 async function deleteTodoItem(button) {
-    const todoItem = button.closest('.todo-item'); // Знаходимо найближчий батьківський елемент з класом 'todo-item'
-    const taskId = todoItem.dataset.id; // Отримуємо _id задачі з data-id атрибуту
+    const todoItem = button.closest('.todo-item'); 
+    const taskId = todoItem.dataset.id;
 
     if (!taskId) {
         return;
     }
 
-    await deleteTaskFromDB(taskId); // Асинхронно видаляємо задачу з бази даних
+    await deleteTaskFromDB(taskId); // видаляємо задачу з бази даних
 
-    todoTasksArr = todoTasksArr.filter(task => task._id !== taskId); // Фільтруємо масив задач, залишаючи тільки ті, у яких _id не співпадає з _id задачі, яку видаляємо
-    todoItem.remove(); // Видаляємо елемент списку з DOM
+    todoTasksArr = todoTasksArr.filter(task => task._id !== taskId); // фільтруємо масив задач, залишаючи тільки ті, у яких _id не співпадає з _id задачі, яку видаляємо
+    todoItem.remove(); 
     updateDeleteButtonAll();
 }
 
 async function handleEdit(button) {
     debugger
     const todoItem = button.closest('.todo-item');
-    const taskId = todoItem.dataset.id; // Отримуємо _id задачі з data-id атрибуту
+    const taskId = todoItem.dataset.id;
 
     if (!taskId) {
         return;
     } 
 
-    const textElement = todoItem.querySelector('.todo-p'); // Отримуємо елемент з текстом задачі
+    const textElement = todoItem.querySelector('.todo-p');
     const currentText = textElement.textContent;
 
     toggleOtherTodoButtons(todoItem, false); // Приховуємо інші кнопки управління задачею
@@ -201,7 +201,7 @@ async function handleEdit(button) {
             return; 
         }
 
-        await updateTaskInDB(taskId, { text: newText }); // Асинхронно оновлюємо текст задачі в базі даних
+        await updateTaskInDB(taskId, { text: newText }); // оновлюємо текст задачі в базі даних
 
         textElement.textContent = newText; 
         todoTextContent.replaceChild(textElement, editInput); // Замінюємо інпут на новий елемент з текстом задачі
@@ -214,7 +214,7 @@ async function handleEdit(button) {
 
 async function toggleTodoCompletion(checkbox) {
     const todoItem = checkbox.closest('.todo-item');
-    const taskId = todoItem.dataset.id; // Отримуємо _id задачі з data-id атрибуту
+    const taskId = todoItem.dataset.id; 
 
     if (!taskId) {
         return;
@@ -222,9 +222,9 @@ async function toggleTodoCompletion(checkbox) {
 
     const isCompleted = checkbox.checked;
 
-    await updateTaskInDB(taskId, { completed: isCompleted }); // Асинхронно оновлюємо стан задачі в базі даних
+    await updateTaskInDB(taskId, { completed: isCompleted }); // оновлюємо стан задачі в базі даних
 
-    const task = todoTasksArr.find(task => task._id === taskId); // Знаходимо задачу в масиві задач за _id
+    const task = todoTasksArr.find(task => task._id === taskId); 
     task.completed = isCompleted; // Оновлюємо стан задачі в масиві задач
     if (isCompleted) {
         todoItem.classList.add('check-bg');
@@ -234,7 +234,7 @@ async function toggleTodoCompletion(checkbox) {
 }
 
 async function clearAllTodos() {
-    todoTasksArr.forEach(task => deleteTaskFromDB(task._id)); // Для кожної задачі в масиві задач асинхронно видаляємо її з бази даних
+    todoTasksArr.forEach(task => deleteTaskFromDB(task._id)); // для кожної задачі в масиві задач асинхронно видаляємо її з бази даних
     todoTasksArr = []; 
     todoList.innerHTML = ''; 
 
@@ -329,7 +329,7 @@ function stopUpdateInterval() {
 
 startUpdateInterval();
 
-// Обробник подій на todoList для відстеження редагування
+// Обробник подій для відстеження редагування інпутів задач
 todoList.addEventListener('focusin', ({ target }) => {
     if (target.classList.contains('todo-input')) {
         stopUpdateInterval(); 

@@ -84,7 +84,7 @@ app.put('/tasks/:id', async (req, res) => {
         const updatedTask = await Task.findByIdAndUpdate(
             req.params.id,
             { text, completed },
-            { new: true } // Повертає оновлений об'єкт
+            { new: true }
         );
 
         if (!updatedTask) {
