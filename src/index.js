@@ -9,7 +9,7 @@ const todoList = document.querySelector('.todo-list');
 const todoInput = document.getElementById('todo-main-input'); 
 const todoBlock = document.querySelector('.todo-block'); 
 const deleteButtonAll = document.getElementById('del-allbtn');
-const updateBtn = document.getElementById('update-btn');
+let intervalUpdate;
 
 let todoTasksArr = []; // Масив для зберігання задач (дані завантажуються з бази даних)
 
@@ -165,8 +165,12 @@ async function deleteTodoItem(button) {
     updateDeleteButtonAll();
 }
 
+startUpdateInterval();
+
 async function handleEdit(button) {
     debugger
+    stopUpdateInterval();
+    
     const todoItem = button.closest('.todo-item');
     const taskId = todoItem.dataset.id;
 
@@ -209,6 +213,8 @@ async function handleEdit(button) {
         button.style.display = ''; 
 
         toggleOtherTodoButtons(todoItem, true); // Відображаємо інші кнопки управління задачею
+
+        startUpdateInterval();
     });
 }
 
@@ -317,8 +323,6 @@ async function updateTasks() {
     }
 }
 
-let intervalUpdate;
-
 function startUpdateInterval() {
     intervalUpdate = setInterval(updateTasks, 5000);
 }
@@ -326,18 +330,3 @@ function startUpdateInterval() {
 function stopUpdateInterval() {
     clearInterval(intervalUpdate);
 }
-
-startUpdateInterval();
-
-// Обробник подій для відстеження редагування інпутів задач
-todoList.addEventListener('focusin', ({ target }) => {
-    if (target.classList.contains('todo-input')) {
-        stopUpdateInterval(); 
-    }
-});
-
-todoList.addEventListener('focusout', ({ target }) => {
-    if (target.classList.contains('todo-input')) {
-        startUpdateInterval(); 
-    }
-});
