@@ -168,7 +168,6 @@ async function deleteTodoItem(button) {
 startUpdateInterval();
 
 async function handleEdit(button) {
-    debugger
     stopUpdateInterval();
     
     const todoItem = button.closest('.todo-item');
